@@ -1,0 +1,46 @@
+version: '3.8'
+
+volumes:
+  mysql-uc12-data:
+
+services:
+  app:
+    container_name: app
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      JAVA_HOME: /usr/lib/jvm/msopenjdk-current/bin/java
+      DISPLAY: ${DISPLAY}
+      QT_X11_NO_MITSHM: "1"
+
+    volumes:
+      - ../..:/workspaces:cached
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:db
+      
+    depends_on:
+      - db
+    
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  db:
+    container_name: mysql
+    image: mysql:latest
+    restart: unless-stopped
+    volumes:
+      - mysql-uc12-data:/var/lib/mysql
+    environment:
+      # NOTE: MYSQL_DB/USER/PASSWORD should match values in app container
+      MYSQL_DATABASE: hospital_uc12
+      MYSQL_ROOT_PASSWORD: root
+
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)

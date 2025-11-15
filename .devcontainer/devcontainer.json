@@ -1,40 +1,34 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/java
+// README at: https://github.com/devcontainers/templates/tree/main/src/java-postgres
 {
-	"name": "Java",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/java:1-17-bookworm",
-
+	"name": "Java & MySQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	
 	"features": {
-		"ghcr.io/devcontainers/features/java:1": {
-			"version": "none",
-			"installMaven": "true",
-			"installGradle": "true"
-		},
-		"ghcr.io/devcontainers-extra/features/mysql-homebrew:1": {}
+		"ghcr.io/devcontainers-extra/features/mysql-homebrew:1": {
+			"version": "latest"
+		}
+	},
+	
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"cweijan.vscode-mysql-client2"
+			]
+		}
 	},
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {}
 
-	"runArgs": [
-		"--env", "DISPLAY=${env:DISPLAY}",
-		"--volume=/tmp/.X11-unix:/tmp/.X11-unix",
-		"--env", "QT_X11_NO_MITSHM=1",
-		// "--network=mysql_phpmyadmin_network" 
-	],
-	
-	// "runArgs": [
-		// "--env=DISPLAY",
-		// "--env=WAYLAND_DISPLAY", 
-		// "--env=XDG_RUNTIME_DIR", 
-		// "--env=PULSE_SERVER", 
-		// "--volume=/tmp/.X11-unix:/tmp/.X11-unix", 
-		// "--volume=/mnt/wslg:/mnt/wslg"
-	// ],
-	
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// This can be used to network with other containers or with the host.
+	// "forwardPorts": [5432],
+
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "sudo apt-get update && sudo apt-get install -y libfreetype6 libxext6 libxrender1 libxtst6 libxi6 fontconfig fonts-dejavu && echo -e '\\033[0;31mPlease run \\033[0;32mxhost +local:docker\\033[0m on the host system to enable graphical applications.'"
+	"postCreateCommand": "echo '\\033[0;31mPlease run \\033[0;32mxhost +local:docker\\033[0m on the host system to enable graphical applications.'"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

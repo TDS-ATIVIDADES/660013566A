@@ -25,7 +25,7 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("imagem/fundo.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("../imagem/Fundo.png"));
         final Image image = icon.getImage();
         jAreaTrabalho = new javax.swing.JDesktopPane(){
 
@@ -71,6 +71,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jmConsulta.add(jmiComJtable);
+        
 
         jMenuBar1.add(jmConsulta);
 

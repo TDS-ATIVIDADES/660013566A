@@ -39,11 +39,25 @@ public class PacienteServicos {
         }
     }
 
+    // Método para validar unicidade do CPF
+    public void validarCpfUnico(String cpf) throws SQLException, IllegalArgumentException {
+        
+        PacienteDAO pacDAO = DAOFactory.getPacienteDAO();
+        Paciente pacienteExistente = pacDAO.buscarPacientePorCpf(cpf);
+        
+        if (pacienteExistente != null) {
+            throw new IllegalArgumentException("CPF já cadastrado no sistema!");
+        }
+    }
+
     // Método para cadastrar um paciente
     public void cadastrarPaciente(Paciente pac) throws SQLException, IllegalArgumentException {
         
         // Validar campos obrigatórios antes de cadastrar
         this.validarPaciente(pac);
+        
+        // Validar se o CPF é único
+        this.validarCpfUnico(pac.getCpf());
 
         // Busca da Fábrica um obj. PacienteDAO
         PacienteDAO pacDAO = DAOFactory.getPacienteDAO();

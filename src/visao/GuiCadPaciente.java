@@ -19,6 +19,53 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
     public GuiCadPaciente() {
         initComponents();
         preencherCombo();
+        aplicarMascaras();
+    }
+    
+    // Método para aplicar máscaras nos campos
+    private void aplicarMascaras() {
+        // Máscara para CPF: apenas dígitos, máximo 11
+        jtCpf.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                if (!Character.isDigit(evt.getKeyChar())) {
+                    evt.consume();
+                }
+                if (jtCpf.getText().length() >= 11) {
+                    evt.consume();
+                }
+            }
+        });
+        
+        // Máscara para Telefone: apenas dígitos durante digitação, máximo 10 (DDD + número)
+        jtTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                if (!Character.isDigit(evt.getKeyChar())) {
+                    evt.consume();
+                }
+                // Limitar a 10 dígitos antes de formatar
+                String txt = jtTelefone.getText();
+                if (txt.length() >= 10) {
+                    evt.consume();
+                }
+            }
+        });
+        
+        // Máscara para Data de Nascimento: apenas dígitos no formato dd/mm/yyyy
+        jtDataNasc.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                if (!Character.isDigit(evt.getKeyChar())) {
+                    evt.consume();
+                }
+                // Máximo 8 dígitos (ddmmyyyy)
+                String txt = jtDataNasc.getText().replaceAll("\\D", "");
+                if (txt.length() >= 8) {
+                    evt.consume();
+                }
+            }
+        });
     }
 
     /**

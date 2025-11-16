@@ -19,6 +19,22 @@ A classe PacienteServicos representa a camada de serviços da aplicação, ela u
 operações de leitura e escrita no banco de dados.
  */
 public class PacienteServicos {
+    
+    // Método para validar se CPF contém apenas dígitos
+    private void validarCpfSomenteDigitos(String cpf) throws IllegalArgumentException {
+        if (!cpf.matches("\\d{11}")) {
+            throw new IllegalArgumentException("CPF deve conter apenas 11 dígitos numéricos!");
+        }
+    }
+    
+    // Método para validar se Telefone contém apenas dígitos na formatação
+    private void validarTelefoneSomenteDigitos(String telefone) throws IllegalArgumentException {
+        String apenasDigitos = telefone.replaceAll("\\D", "");
+        if (apenasDigitos.length() != 10) {
+            throw new IllegalArgumentException("Telefone deve conter 10 dígitos numéricos (DDD + número)!");
+        }
+    }
+    
     // Método para validar campos obrigatórios do paciente
     public void validarPaciente(Paciente pac) throws IllegalArgumentException {
         
@@ -28,8 +44,12 @@ public class PacienteServicos {
         
         if (pac.getCpf() == null || pac.getCpf(false).trim().isEmpty()) {
             throw new IllegalArgumentException("CPF é obrigatório!");
-        } else if (pac.getCpf(false).length() != 11) {
-            throw new IllegalArgumentException("CPF deve conter 11 dígitos!");
+        } else {
+            String cpf = pac.getCpf(false);
+            validarCpfSomenteDigitos(cpf);
+            if (cpf.length() != 11) {
+                throw new IllegalArgumentException("CPF deve conter 11 dígitos!");
+            }
         }
         
         if (pac.getEndereco() == null || pac.getEndereco().trim().isEmpty()) {
@@ -43,6 +63,7 @@ public class PacienteServicos {
             throw new IllegalArgumentException("Telefone é obrigatório!");
         } else {
             String tel = pac.getTelefone().trim();
+            validarTelefoneSomenteDigitos(tel);
             if (tel.length() > 15) {
                 throw new IllegalArgumentException("Telefone deve conter no máximo 15 caracteres!");
             }

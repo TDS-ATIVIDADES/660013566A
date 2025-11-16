@@ -2,14 +2,13 @@
 package visao;
 
 import dao.ConvenioDAO;
-import dao.PacienteDAO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-
 import modelo.Convenio;
 import modelo.Paciente;
 import servicos.ConvenioServicos;
+import servicos.PacienteServicos;
 import servicos.ServicosFactory;
 
 public class GuiCadPaciente extends javax.swing.JInternalFrame {
@@ -163,12 +162,11 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
 
     private void cadastrar() {
         try {
-
+            // Se passou nas validações da UI, cria o objeto Paciente
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
             Paciente pac = new Paciente();
 
-            // Atribuindo valores aos atributos do Paciente com base nos campos preenchidos pelo usuário na tela
+            // Atribuindo valores aos atributos do Paciente
             pac.setNome(jtNome.getText());
             pac.setEndereco(jtEndereco.getText());
             pac.setDataNascimento(sdf.parse(jtDataNasc.getText()));
@@ -191,21 +189,21 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
                 // Atribuindo o ID do convênio ao paciente
                 pac.setConvenio(convenio.getIdConvenio());
 
-            } else {
-                JOptionPane.showMessageDialog(this,
-                        "Selecione um produto");
-            } // fecha else
+            }
 
-           // Criando objeto PacienteDAO para cadastrar o paciente no banco de dados
-            PacienteDAO pacDAO = new PacienteDAO();
-            pacDAO.cadastrarPaciente(pac);
+            // Chamar serviço para cadastrar (que também valida)
+            PacienteServicos ps = ServicosFactory.getPacienteServicos();
+            ps.cadastrarPaciente(pac);
 
             // Mensagem de sucesso
             JOptionPane.showMessageDialog(this, "Paciente cadastrado com sucesso!");
 
+        } catch (IllegalArgumentException iae) {
+            JOptionPane.showMessageDialog(this, iae.getMessage());
+        } catch (java.text.ParseException pe) {
+            JOptionPane.showMessageDialog(this, "Formato de data inválido! Use dd/MM/yyyy");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "ERRO! " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "ERRO! " + e.getMessage());
         } // fecha catch
 
     }// fecha método

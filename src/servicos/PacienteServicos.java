@@ -19,9 +19,31 @@ A classe PacienteServicos representa a camada de serviços da aplicação, ela u
 operações de leitura e escrita no banco de dados.
  */
 public class PacienteServicos {
+    // Método para validar campos obrigatórios do paciente
+    public void validarPaciente(Paciente pac) throws IllegalArgumentException {
+        
+        if (pac.getNome() == null || pac.getNome().trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome é obrigatório!");
+        }
+        if (pac.getCpf() == null || pac.getCpf().trim().isEmpty()) {
+            throw new IllegalArgumentException("CPF é obrigatório!");
+        }
+        if (pac.getEndereco() == null || pac.getEndereco().trim().isEmpty()) {
+            throw new IllegalArgumentException("Endereço é obrigatório!");
+        }
+        if (pac.getDataNascimento() == null) {
+            throw new IllegalArgumentException("Data de nascimento é obrigatória!");
+        }
+        if (pac.getIdConvenio() <= 0) {
+            throw new IllegalArgumentException("Convênio é obrigatório!");
+        }
+    }
 
     // Método para cadastrar um paciente
-    public void cadastrarPaciente(Paciente pac) throws SQLException {
+    public void cadastrarPaciente(Paciente pac) throws SQLException, IllegalArgumentException {
+        
+        // Validar campos obrigatórios antes de cadastrar
+        this.validarPaciente(pac);
 
         // Busca da Fábrica um obj. PacienteDAO
         PacienteDAO pacDAO = DAOFactory.getPacienteDAO();

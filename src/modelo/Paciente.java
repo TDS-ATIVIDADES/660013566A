@@ -98,6 +98,30 @@ public class Paciente {
         return cpf;
     }
 
+    public String getCpf(boolean formatted) {
+        if (cpf == null) {
+            return null;
+        }
+
+        // Remove quaisquer caracteres não numéricos
+        String digits = cpf.replaceAll("\\D", "");
+
+        if (!formatted) {
+            return digits;
+        }
+
+        // Se não tiver 11 dígitos, retorna como informado originalmente
+        if (digits.length() != 11) {
+            return cpf;
+        }
+
+        return String.format("%s.%s.%s-%s",
+                digits.substring(0, 3),
+                digits.substring(3, 6),
+                digits.substring(6, 9),
+                digits.substring(9, 11));
+    }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }

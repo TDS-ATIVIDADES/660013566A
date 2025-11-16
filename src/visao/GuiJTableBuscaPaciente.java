@@ -173,7 +173,7 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
                 dtm.addRow(new String[]{
                     String.valueOf(pac.get(i).getIdPaciente()),
                     String.valueOf(pac.get(i).getNome()),
-                    String.valueOf(pac.get(i).getCpf()),
+                    String.valueOf(pac.get(i).getCpf(true)),
                     String.valueOf(pac.get(i).getTelefone()),});
             }//fecha for
 

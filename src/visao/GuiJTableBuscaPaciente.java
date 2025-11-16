@@ -20,6 +20,24 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
         /* Chamando o método preencherTabela 
          no construtor */
         preencherTabela();
+        aplicarValidacaoFiltro();
+    }
+    
+    // Método para aplicar validação no campo de pesquisa conforme o tipo de filtro
+    private void aplicarValidacaoFiltro() {
+        jtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                String filtroSelecionado = (String) jcomboFiltro.getSelectedItem();
+                
+                // Se for "Código Paciente", aceita apenas dígitos
+                if (filtroSelecionado.equals("Código Paciente")) {
+                    if (!Character.isDigit(evt.getKeyChar())) {
+                        evt.consume();
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -262,7 +280,8 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbPreencherTabelaActionPerformed
 
     private void jcomboFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcomboFiltroActionPerformed
-        // TODO add your handling code here:
+        // Limpar o campo de pesquisa quando o tipo de filtro é alterado
+        jtFiltro.setText("");
     }//GEN-LAST:event_jcomboFiltroActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

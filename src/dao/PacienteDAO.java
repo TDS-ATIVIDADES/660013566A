@@ -48,7 +48,7 @@ public class PacienteDAO {
             pst.setString(2, pac.getEndereco());
             pst.setString(3, sdf.format(pac.getDataNascimento()));
             pst.setString(4, pac.getTelefone());
-            pst.setString(5, pac.getCpf());
+            pst.setString(5, pac.getCpf(false));
             pst.setString(6, pac.getRg());
             pst.setInt(7, pac.getIdConvenio());
 

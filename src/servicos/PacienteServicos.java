@@ -25,15 +25,45 @@ public class PacienteServicos {
         if (pac.getNome() == null || pac.getNome().trim().isEmpty()) {
             throw new IllegalArgumentException("Nome é obrigatório!");
         }
-        if (pac.getCpf() == null || pac.getCpf().trim().isEmpty()) {
+        
+        if (pac.getCpf() == null || pac.getCpf(false).trim().isEmpty()) {
             throw new IllegalArgumentException("CPF é obrigatório!");
+        } else if (pac.getCpf(false).length() != 11) {
+            throw new IllegalArgumentException("CPF deve conter 11 dígitos!");
         }
+        
         if (pac.getEndereco() == null || pac.getEndereco().trim().isEmpty()) {
             throw new IllegalArgumentException("Endereço é obrigatório!");
+        } else if (pac.getEndereco().length() > 200) {
+            throw new IllegalArgumentException("Endereço deve conter menos 200 caracteres!");
         }
+        
+        // Validação do telefone: obrigatório, máximo 15 caracteres, e formato (xx)xxxx-xxxx
+        if (pac.getTelefone() == null || pac.getTelefone().trim().isEmpty()) {
+            throw new IllegalArgumentException("Telefone é obrigatório!");
+        } else {
+            String tel = pac.getTelefone().trim();
+            if (tel.length() > 15) {
+                throw new IllegalArgumentException("Telefone deve conter no máximo 15 caracteres!");
+            }
+            // Formato esperado: (xx)xxxx-xxxx — 2 dígitos de DDD e 8 dígitos do número
+            if (!tel.matches("^\\(\\d{2}\\)\\d{4}-\\d{4}$")) {
+                throw new IllegalArgumentException("Telefone inválido. Use o formato (xx)xxxx-xxxx");
+            }
+        }
+
         if (pac.getDataNascimento() == null) {
             throw new IllegalArgumentException("Data de nascimento é obrigatória!");
         }
+        
+        // Validação simples de e-mail (opcional): se preenchido, verificar formato
+        if (pac.getEmail() != null && !pac.getEmail().trim().isEmpty()) {
+            String email = pac.getEmail().trim();
+            if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
+                throw new IllegalArgumentException("E-mail inválido!");
+            }
+        }
+        
         if (pac.getIdConvenio() <= 0) {
             throw new IllegalArgumentException("Convênio é obrigatório!");
         }
@@ -57,7 +87,7 @@ public class PacienteServicos {
         this.validarPaciente(pac);
         
         // Validar se o CPF é único
-        this.validarCpfUnico(pac.getCpf());
+        this.validarCpfUnico(pac.getCpf(false));
 
         // Busca da Fábrica um obj. PacienteDAO
         PacienteDAO pacDAO = DAOFactory.getPacienteDAO();

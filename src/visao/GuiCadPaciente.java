@@ -260,6 +260,11 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
         jtNome.setText("");
         jtEndereco.setText("");
         jtCpf.setText("");
+        jtRG.setText("");
+        jtTelefone.setText("");
+        jtDataNasc.setText("");
+        jtEmail1.setText("");
+        jcConvenio.setSelectedIndex(0);
     }// fecha método
 
     

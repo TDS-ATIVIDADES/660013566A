@@ -244,6 +244,8 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
 
             // Mensagem de sucesso
             JOptionPane.showMessageDialog(this, "Paciente cadastrado com sucesso!");
+            // Limpa os campos somente em caso de sucesso
+            limpar();
 
         } catch (IllegalArgumentException iae) {
             JOptionPane.showMessageDialog(this, iae.getMessage());
@@ -305,7 +307,6 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
 
     private void jbCadastrar1ActionPerformed(java.awt.event.ActionEvent evt) {
         cadastrar();
-        limpar();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -107,17 +107,17 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLayeredPane1.setOpaque(true);
 
-        jlNome.setText("Nome");
+        jlNome.setText("<html>Nome<font color='red'>*</font></html>");
         jLayeredPane1.add(jlNome);
         jlNome.setBounds(40, 20, 60, 30);
 
-        jlCpf.setText("CPF");
+        jlCpf.setText("<html>CPF<font color='red'>*</font></html>");
         jLayeredPane1.add(jlCpf);
         jlCpf.setBounds(40, 60, 90, 30);
 
-        jlEndereco.setText("Endereço");
+        jlEndereco.setText("<html>Endereço<font color='red'>*</font></html>");
         jLayeredPane1.add(jlEndereco);
-        jlEndereco.setBounds(40, 140, 60, 30);
+        jlEndereco.setBounds(40, 140, 100, 30);
         jLayeredPane1.add(jtNome);
         jtNome.setBounds(140, 20, 210, 30);
         jLayeredPane1.add(jtCpf);
@@ -125,11 +125,11 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
         jLayeredPane1.add(jtEndereco);
         jtEndereco.setBounds(140, 140, 210, 30);
 
-        jlEspecialidade.setText("Convênio");
+        jlEspecialidade.setText("<html>Convênio<font color='red'>*</font></html>");
         jLayeredPane1.add(jlEspecialidade);
         jlEspecialidade.setBounds(40, 300, 100, 30);
 
-        jlDataNasc.setText("Data Nascimento");
+        jlDataNasc.setText("<html>Data Nascimento<font color='red'>*</font></html>");
         jLayeredPane1.add(jlDataNasc);
         jlDataNasc.setBounds(40, 260, 100, 30);
 
@@ -141,9 +141,9 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
         jLayeredPane1.add(jtTelefone);
         jtTelefone.setBounds(140, 180, 130, 30);
 
-        jlTelefone.setText("Telefone");
+        jlTelefone.setText("<html>Telefone<font color='red'>*</font></html>");
         jLayeredPane1.add(jlTelefone);
-        jlTelefone.setBounds(40, 180, 50, 30);
+        jlTelefone.setBounds(40, 180, 100, 30);
 
         jlEmail1.setText("E-mal");
         jLayeredPane1.add(jlEmail1);

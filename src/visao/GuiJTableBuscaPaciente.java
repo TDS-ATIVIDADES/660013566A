@@ -29,51 +29,14 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 String filtroSelecionado = (String) jcomboFiltro.getSelectedItem();
-                
-                // Se for "Código Paciente", aceita apenas dígitos
-                if (filtroSelecionado.equals("Código Paciente")) {
-                    if (!Character.isDigit(evt.getKeyChar())) {
-                        evt.consume();
-                    }
-                }
-                // Se for "CPF", aceita apenas dígitos
-                else if (filtroSelecionado.equals("CPF")) {
+
+                // Se for "Código Paciente" ou "CPF", aceita apenas dígitos
+                if ("Código Paciente".equals(filtroSelecionado) || "CPF".equals(filtroSelecionado)) {
                     if (!Character.isDigit(evt.getKeyChar())) {
                         evt.consume();
                     }
                 }
                 // Se for "Nome Paciente", aceita qualquer caractere (sem restrição)
-                // Espaço em branco também é aceito para nomes
-            }
-
-            @Override
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                String filtroSelecionado = (String) jcomboFiltro.getSelectedItem();
-
-                // Se for CPF, formata automaticamente para xxx.xxx.xxx-xx
-                if ("CPF".equals(filtroSelecionado)) {
-                    String digits = jtFiltro.getText().replaceAll("\\D", "");
-                    if (digits.length() > 11) {
-                        digits = digits.substring(0, 11);
-                    }
-                    StringBuilder formatted = new StringBuilder();
-                    int len = digits.length();
-                    if (len > 0) {
-                        if (len <= 3) {
-                            formatted.append(digits);
-                        } else if (len <= 6) {
-                            formatted.append(digits.substring(0, 3)).append('.').append(digits.substring(3));
-                        } else if (len <= 9) {
-                            formatted.append(digits.substring(0, 3)).append('.').append(digits.substring(3, 6)).append('.').append(digits.substring(6));
-                        } else {
-                            // 10 or 11 digits
-                            formatted.append(digits.substring(0, 3)).append('.').append(digits.substring(3, 6)).append('.').append(digits.substring(6, 9)).append('-').append(digits.substring(9));
-                        }
-                    }
-                    jtFiltro.setText(formatted.toString());
-                    // move caret to end for a simpler UX
-                    jtFiltro.setCaretPosition(jtFiltro.getText().length());
-                }
             }
         });
     }
@@ -95,7 +58,7 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
         jbPreencherTabela = new javax.swing.JButton();
         jLayeredPane3 = new javax.swing.JLayeredPane();
         jlFiltro = new javax.swing.JLabel();
-        jtFiltro = new javax.swing.JTextField();
+        jtFiltro = new javax.swing.JFormattedTextField();
         jcomboFiltro = new javax.swing.JComboBox();
         jlPesquisarpor = new javax.swing.JLabel();
 
@@ -262,7 +225,9 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
                 if (pesquisa.equals("Código Paciente")) {
                     query = "where ID_PACIENTE = " + jtFiltro.getText() + "";
                 } else if (pesquisa.equals("CPF")) {
-                    query = "where CPF = '" + jtFiltro.getText() + "'";
+                    // Remove máscara (pontos e traço) antes de pesquisar
+                    String cpfDigits = jtFiltro.getText().replaceAll("\\D", "");
+                    query = "where CPF = '" + cpfDigits + "'";
                 } else {
                     query = "where NOME like '%" + jtFiltro.getText() + "%'";
                 }
@@ -322,9 +287,26 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
 
     private void jcomboFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcomboFiltroActionPerformed
         // Limpar o campo de pesquisa e a tabela quando o tipo de filtro é alterado
+        String selecionado = (String) jcomboFiltro.getSelectedItem();
         jtFiltro.setText("");
         jtFiltro.requestFocus();
-        preencherTabela();
+
+        // Se o filtro for CPF, aplica máscara; caso contrário remove formatação
+        if ("CPF".equals(selecionado)) {
+            try {
+                javax.swing.text.MaskFormatter mf = new javax.swing.text.MaskFormatter("###.###.###-##");
+                mf.setPlaceholderCharacter('_');
+                jtFiltro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(mf));
+            } catch (java.text.ParseException ex) {
+                // ignore — manter campo sem formatação
+            }
+        } else {
+            // remove máscara — texto livre
+            jtFiltro.setFormatterFactory(null);
+        }
+
+        // limpar resultados atuais para evitar confusão
+        limparTabela();
         jtablePaciente.setModel(dtm);
     }//GEN-LAST:event_jcomboFiltroActionPerformed
 
@@ -338,7 +320,7 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox jcomboFiltro;
     private javax.swing.JLabel jlFiltro;
     private javax.swing.JLabel jlPesquisarpor;
-    private javax.swing.JTextField jtFiltro;
+    private javax.swing.JFormattedTextField jtFiltro;
     private javax.swing.JTable jtablePaciente;
     // End of variables declaration//GEN-END:variables
 }

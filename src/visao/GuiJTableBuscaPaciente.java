@@ -45,6 +45,36 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
                 // Se for "Nome Paciente", aceita qualquer caractere (sem restrição)
                 // Espaço em branco também é aceito para nomes
             }
+
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                String filtroSelecionado = (String) jcomboFiltro.getSelectedItem();
+
+                // Se for CPF, formata automaticamente para xxx.xxx.xxx-xx
+                if ("CPF".equals(filtroSelecionado)) {
+                    String digits = jtFiltro.getText().replaceAll("\\D", "");
+                    if (digits.length() > 11) {
+                        digits = digits.substring(0, 11);
+                    }
+                    StringBuilder formatted = new StringBuilder();
+                    int len = digits.length();
+                    if (len > 0) {
+                        if (len <= 3) {
+                            formatted.append(digits);
+                        } else if (len <= 6) {
+                            formatted.append(digits.substring(0, 3)).append('.').append(digits.substring(3));
+                        } else if (len <= 9) {
+                            formatted.append(digits.substring(0, 3)).append('.').append(digits.substring(3, 6)).append('.').append(digits.substring(6));
+                        } else {
+                            // 10 or 11 digits
+                            formatted.append(digits.substring(0, 3)).append('.').append(digits.substring(3, 6)).append('.').append(digits.substring(6, 9)).append('-').append(digits.substring(9));
+                        }
+                    }
+                    jtFiltro.setText(formatted.toString());
+                    // move caret to end for a simpler UX
+                    jtFiltro.setCaretPosition(jtFiltro.getText().length());
+                }
+            }
         });
     }
 

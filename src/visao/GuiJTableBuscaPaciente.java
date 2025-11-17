@@ -284,6 +284,9 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtFiltroKeyReleased
 
     private void jbPreencherTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPreencherTabelaActionPerformed
+        // Limpa o campo de pesquisa e reseta o tipo de filtro antes de preencher
+        jtFiltro.setText("");
+        jcomboFiltro.setSelectedIndex(0);
         preencherTabela();
     }//GEN-LAST:event_jbPreencherTabelaActionPerformed
 

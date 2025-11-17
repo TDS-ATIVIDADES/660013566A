@@ -19,53 +19,6 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
     public GuiCadPaciente() {
         initComponents();
         preencherCombo();
-        aplicarMascaras();
-    }
-    
-    // Método para aplicar máscaras nos campos
-    private void aplicarMascaras() {
-        // Máscara para CPF: apenas dígitos, máximo 11
-        jtCpf.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                if (!Character.isDigit(evt.getKeyChar())) {
-                    evt.consume();
-                }
-                if (jtCpf.getText().length() >= 11) {
-                    evt.consume();
-                }
-            }
-        });
-        
-        // Máscara para Telefone: apenas dígitos durante digitação, máximo 10 (DDD + número)
-        jtTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                if (!Character.isDigit(evt.getKeyChar())) {
-                    evt.consume();
-                }
-                // Limitar a 10 dígitos antes de formatar
-                String txt = jtTelefone.getText();
-                if (txt.length() >= 10) {
-                    evt.consume();
-                }
-            }
-        });
-        
-        // Máscara para Data de Nascimento: apenas dígitos no formato dd/mm/yyyy
-        jtDataNasc.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                if (!Character.isDigit(evt.getKeyChar())) {
-                    evt.consume();
-                }
-                // Máximo 8 dígitos (ddmmyyyy)
-                String txt = jtDataNasc.getText().replaceAll("\\D", "");
-                if (txt.length() >= 8) {
-                    evt.consume();
-                }
-            }
-        });
     }
 
     /**
@@ -83,12 +36,33 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
         jlCpf = new javax.swing.JLabel();
         jlEndereco = new javax.swing.JLabel();
         jtNome = new javax.swing.JTextField();
-        jtCpf = new javax.swing.JTextField();
+        // Campo CPF com máscara
+        try {
+            javax.swing.text.MaskFormatter cpfMask = new javax.swing.text.MaskFormatter("###.###.###-##");
+            cpfMask.setPlaceholderCharacter('_');
+            jtCpf = new javax.swing.JFormattedTextField(cpfMask);
+        } catch (java.text.ParseException ex) {
+            jtCpf = new javax.swing.JFormattedTextField();
+        }
         jtEndereco = new javax.swing.JTextField();
         jlEspecialidade = new javax.swing.JLabel();
         jlDataNasc = new javax.swing.JLabel();
-        jtDataNasc = new javax.swing.JTextField();
-        jtTelefone = new javax.swing.JTextField();
+        // Campo Data de Nascimento com máscara
+        try {
+            javax.swing.text.MaskFormatter dateMask = new javax.swing.text.MaskFormatter("##/##/####");
+            dateMask.setPlaceholderCharacter('_');
+            jtDataNasc = new javax.swing.JFormattedTextField(dateMask);
+        } catch (java.text.ParseException ex) {
+            jtDataNasc = new javax.swing.JFormattedTextField();
+        }
+        // Campo Telefone com máscara (formato 10 dígitos)
+        try {
+            javax.swing.text.MaskFormatter telMask = new javax.swing.text.MaskFormatter("(##)####-####");
+            telMask.setPlaceholderCharacter('_');
+            jtTelefone = new javax.swing.JFormattedTextField(telMask);
+        } catch (java.text.ParseException ex) {
+            jtTelefone = new javax.swing.JFormattedTextField();
+        }
         jlTelefone = new javax.swing.JLabel();
         jlEmail1 = new javax.swing.JLabel();
         jtEmail1 = new javax.swing.JTextField();
@@ -323,12 +297,12 @@ public class GuiCadPaciente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jlNome;
     private javax.swing.JLabel jlRG;
     private javax.swing.JLabel jlTelefone;
-    private javax.swing.JTextField jtCpf;
-    private javax.swing.JTextField jtDataNasc;
+    private javax.swing.JFormattedTextField jtCpf;
+    private javax.swing.JFormattedTextField jtDataNasc;
     private javax.swing.JTextField jtEmail1;
     private javax.swing.JTextField jtEndereco;
     private javax.swing.JTextField jtNome;
     private javax.swing.JTextField jtRG;
-    private javax.swing.JTextField jtTelefone;
+    private javax.swing.JFormattedTextField jtTelefone;
     // End of variables declaration//GEN-END:variables
 }

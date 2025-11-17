@@ -38,6 +38,22 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
                 }
                 // Se for "Nome Paciente", aceita qualquer caractere (sem restrição)
             }
+
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                String filtroSelecionado = (String) jcomboFiltro.getSelectedItem();
+
+                // Se for CPF, formata automaticamente para ###.###.###-##
+                if ("CPF".equals(filtroSelecionado)) {
+                    try {
+                        javax.swing.text.MaskFormatter cpfMask = new javax.swing.text.MaskFormatter("###.###.###-##");
+                        cpfMask.setPlaceholderCharacter('_');
+                        jtFiltro = new javax.swing.JFormattedTextField(cpfMask);
+                    } catch (java.text.ParseException ex) {
+                        jtFiltro = new javax.swing.JFormattedTextField();
+                    }
+                }
+            }
         });
     }
 
@@ -304,9 +320,10 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
             // remove máscara — texto livre
             jtFiltro.setFormatterFactory(null);
         }
-
+        
+        jtFiltro.setText("");
         // limpar resultados atuais para evitar confusão
-        limparTabela();
+        preencherTabela();
         jtablePaciente.setModel(dtm);
     }//GEN-LAST:event_jcomboFiltroActionPerformed
 

@@ -36,6 +36,14 @@ public class GuiJTableBuscaPaciente extends javax.swing.JInternalFrame {
                         evt.consume();
                     }
                 }
+                // Se for "CPF", aceita apenas dígitos
+                else if (filtroSelecionado.equals("CPF")) {
+                    if (!Character.isDigit(evt.getKeyChar())) {
+                        evt.consume();
+                    }
+                }
+                // Se for "Nome Paciente", aceita qualquer caractere (sem restrição)
+                // Espaço em branco também é aceito para nomes
             }
         });
     }

@@ -51,6 +51,7 @@ public class PacienteDAO {
             pst.setString(5, pac.getCpf(false));
             pst.setString(6, pac.getRg());
             pst.setInt(7, pac.getIdConvenio());
+            pst.setString(8, pac.getEmail());
 
             // Executando o PreparedStatement
             pst.execute();

@@ -1,7 +1,11 @@
 {
     "java.debug.settings.onBuildFailureProceed": true,
+    "java.project.sourcePaths": [
+        ".",
+        "src",
+    ],
     "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "bibliotecas/**/*.jar"
-    ]
+        "/workspaces/660013566A/bibliotecas/junit-platform-console-standalone-6.0.1.jar",
+        "/workspaces/660013566A/bibliotecas/mysql-connector-java-8.0.30.jar"
+    ],
 }

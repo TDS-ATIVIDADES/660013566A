@@ -8,6 +8,7 @@ import dao.DAOFactory;
 import dao.PacienteDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import modelo.Paciente;
 
 /**
@@ -27,6 +28,18 @@ public class PacienteServicos {
         }
     }
     
+    // Método para validar formato de e-mail
+    private void validarEmail(String email) throws IllegalArgumentException {
+        if (email != null && !email.trim().isEmpty()) {
+            // Regex básico para validação de email
+            String emailRegex = "^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+            if (!email.matches(emailRegex)) {
+                throw new IllegalArgumentException("E-mail informado é inválido!");
+            }
+        }
+        // Email vazio/null é permitido (opcional)
+    }
+    
     // Método para validar se Telefone contém apenas dígitos na formatação
     private void validarTelefoneSomenteDigitos(String telefone) throws IllegalArgumentException {
         String apenasDigitos = telefone.replaceAll("\\D", "");
@@ -35,12 +48,27 @@ public class PacienteServicos {
         }
     }
     
+    // Método para validar data de nascimento (não pode ser futura)
+    private void validarDataNascimento(Date dataNascimento) throws IllegalArgumentException {
+        if (dataNascimento != null) {
+            Date hoje = new Date();
+            if (dataNascimento.after(hoje)) {
+                throw new IllegalArgumentException("Data de nascimento não pode ser futura!");
+            }
+        }
+    }
+    
     // Método para validar campos obrigatórios do paciente
     public void validarPaciente(Paciente pac) throws IllegalArgumentException {
         
         if (pac.getNome() == null || pac.getNome().trim().isEmpty()) {
             throw new IllegalArgumentException("Nome é obrigatório!");
+        } else if (pac.getNome().length() > 55) {
+            throw new IllegalArgumentException("Nome deve conter no máximo 55 caracteres!");
         }
+        
+        // Validação do e-mail (opcional, mas se informado deve ser válido)
+        validarEmail(pac.getEmail());
         
         if (pac.getCpf() == null || pac.getCpf(false).trim().isEmpty()) {
             throw new IllegalArgumentException("CPF é obrigatório!");
@@ -77,13 +105,9 @@ public class PacienteServicos {
             throw new IllegalArgumentException("Data de nascimento é obrigatória!");
         }
         
-        // Validação simples de e-mail (opcional): se preenchido, verificar formato
-        if (pac.getEmail() != null && !pac.getEmail().trim().isEmpty()) {
-            String email = pac.getEmail().trim();
-            if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
-                throw new IllegalArgumentException("E-mail inválido!");
-            }
-        }
+        // Validação adicional da data de nascimento
+        validarDataNascimento(pac.getDataNascimento());
+        
         
         if (pac.getIdConvenio() <= 0) {
             throw new IllegalArgumentException("Convênio é obrigatório!");
@@ -137,4 +161,30 @@ public class PacienteServicos {
         return pacDAO.buscarPaciente();
     }
 
+    // Método para validar formato do filtro
+    public void validarFiltro(String tipoFiltro, String valor) throws IllegalArgumentException {
+        if (valor == null || valor.trim().isEmpty()) {
+            return; // Filtro vazio é permitido (limpa filtro)
+        }
+        
+        switch (tipoFiltro.toLowerCase()) {
+            case "id":
+                if (!valor.matches("\\d+")) {
+                    throw new IllegalArgumentException("ID deve conter apenas números!");
+                }
+                break;
+            case "cpf":
+                if (!valor.matches("\\d+")) {
+                    throw new IllegalArgumentException("CPF deve conter apenas números!");
+                }
+                break;
+            case "nome":
+                if (!valor.matches("[\\p{L}\\s]+")) {
+                    throw new IllegalArgumentException("Nome deve conter apenas caracteres alfabéticos!");
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo de filtro inválido!");
+        }
+    }
 }

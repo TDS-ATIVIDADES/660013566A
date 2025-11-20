@@ -39,7 +39,7 @@ public class PacienteDAO {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
             // String que receberá instrução SQL
-            String sql = "insert into PACIENTE(NOME, ENDERECO, DATA_NASC, TELEFONE, CPF, RG, ID_CONVENIO_FK) values(?,?,?,?,?,?,?)";
+            String sql = "insert into paciente(NOME, ENDERECO, DATA_NASC, TELEFONE, CPF, RG, ID_CONVENIO_FK, EMAIL) values(?,?,?,?,?,?,?,?)";
 
             PreparedStatement pst = this.con.prepareStatement(sql);
 
@@ -171,7 +171,7 @@ public class PacienteDAO {
         try {
 
             // String que receberá instrução SQL
-            String sql = "SELECT * FROM PACIENTE";
+            String sql = "SELECT * FROM paciente";
 
             this.con = this.conexao.getConexao();
             PreparedStatement pst = con.prepareStatement(sql);

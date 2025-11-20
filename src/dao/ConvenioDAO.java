@@ -46,7 +46,7 @@ public class ConvenioDAO {
 
         try {
             // String que receberá instrução SQL
-            String sql = "SELECT * FROM CONVENIO";
+            String sql = "SELECT * FROM convenio";
             this.con = this.conexao.getConexao();
 
             //Preparando a instrução SQL
@@ -92,7 +92,7 @@ public class ConvenioDAO {
         try {
             // Monta a consulta SQL com base na String query e armazena na variável sql
 
-            String sql = "SELECT * FROM CONVENIO WHERE NOME_CONVENIO LIKE '%" + query + "%';";
+            String sql = "SELECT * FROM convenio WHERE NOME_CONVENIO LIKE '%" + query + "%';";
 
             // Obtém uma conexão com o banco de dados e prepara uma instrução SQL
             this.con = this.conexao.getConexao();

@@ -1,0 +1,112 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar Projeto",
+            "type": "shell",
+            "command": "find src -name '*.java' | xargs javac -cp 'bibliotecas/*' -d build/classes",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Compilar Testes",
+            "type": "shell",
+            "command": "find test -name '*.java' | xargs javac -cp 'build/classes:bibliotecas/*' -d build/classes",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Executar Todos os Testes",
+            "type": "shell",
+            "command": "java -cp 'build/classes:bibliotecas/*' org.junit.runner.JUnitCore test.modelo.PacienteTest test.modelo.ConvenioTest test.servicos.PacienteServicosTest test.servicos.ConvenioServicosTest test.dao.PacienteDAOTest test.dao.ConvenioDAOTest",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "dependsOn": ["Compilar Projeto", "Compilar Testes"]
+        },
+        {
+            "label": "Executar Testes de Serviço",
+            "type": "shell",
+            "command": "java -cp 'build/classes:bibliotecas/*' org.junit.runner.JUnitCore test.servicos.PacienteServicosTest test.servicos.ConvenioServicosTest",
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "dependsOn": ["Compilar Projeto", "Compilar Testes"]
+        },
+        {
+            "label": "Executar Testes de Cadastro",
+            "type": "shell",
+            "command": "java -cp 'build/classes:bibliotecas/*' org.junit.runner.JUnitCore test.servicos.PacienteServicosTest",
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "dependsOn": ["Compilar Projeto", "Compilar Testes"]
+        },
+        {
+            "label": "Executar Testes de DAO",
+            "type": "shell",
+            "command": "java -cp 'build/classes:bibliotecas/*' org.junit.runner.JUnitCore test.dao.PacienteDAOTest test.dao.ConvenioDAOTest",
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "dependsOn": ["Compilar Projeto", "Compilar Testes"]
+        },
+        {
+            "label": "Executar Testes de Modelo",
+            "type": "shell",
+            "command": "java -cp 'build/classes:bibliotecas/*' org.junit.runner.JUnitCore test.modelo.PacienteTest test.modelo.ConvenioTest",
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "dependsOn": ["Compilar Projeto", "Compilar Testes"]
+        },
+        {
+            "label": "Limpar Build",
+            "type": "shell",
+            "command": "rm -rf build/classes/*",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            }
+        }
+    ]
+}

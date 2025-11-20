@@ -7,10 +7,10 @@
 ![image](https://img.shields.io/badge/Git-E34F26?style=for-the-badge&logo=git&logoColor=white
 )
 
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/TDS-ATIVIDADES/660013566A)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-closed/TDS-ATIVIDADES/660013566A)
-![GitHub Issues or Pull Requests by label](https://img.shields.io/github/issues-closed/TDS-ATIVIDADES/660013566A/bug)
-![GitHub Issues or Pull Requests by label](https://img.shields.io/github/issues-closed/TDS-ATIVIDADES/660013566A/enhancement)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/TDS-ATIVIDADES/660013566A?style=for-the-badge)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-closed/TDS-ATIVIDADES/660013566A?style=for-the-badge)
+![GitHub Issues or Pull Requests by label](https://img.shields.io/github/issues-closed/TDS-ATIVIDADES/660013566A/bug?style=for-the-badge)
+![GitHub Issues or Pull Requests by label](https://img.shields.io/github/issues-closed/TDS-ATIVIDADES/660013566A/enhancement?style=for-the-badge)
 
 
 ## Contexto

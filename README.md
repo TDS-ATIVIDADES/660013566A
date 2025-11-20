@@ -1,11 +1,13 @@
 # Sistema Hospitalar
 ![image](https://img.shields.io/badge/java-CC342D?style=for-the-badge&logo=java&logoColor=white)
-![image](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white
-)
+![image](    https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 ![image](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
 )
 ![image](https://img.shields.io/badge/Git-E34F26?style=for-the-badge&logo=git&logoColor=white
 )
+![](https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)
+![](https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white)
+![](    https://img.shields.io/badge/Junit5-25A162?style=for-the-badge&logo=junit5&logoColor=white)
 
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/TDS-ATIVIDADES/660013566A?style=for-the-badge)
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-closed/TDS-ATIVIDADES/660013566A?style=for-the-badge)
